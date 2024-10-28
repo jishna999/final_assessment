@@ -1,0 +1,59 @@
+<odoo>
+    <record id="day_purchase_report_view" model="ir.ui.view">
+        <field name="name">Day wise Report</field>
+        <field name="model">day.report</field>
+        <field name="arch" type="xml">
+            <form string="Day wise Purchase Report">
+                <sheet>
+
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="company_id" widget="many2many_tags"/>
+                    </group>
+
+                </sheet>
+
+
+                <footer>
+                    <button name="action_report" type="object"
+                            id="day_report_view"
+                            string="View"
+                            class="oe_highlight"/>
+                    <button name="final.action_report_purchase_order" type="action"
+                            id="day_report"
+                            string="Report"
+                            class="oe_highlight"/>
+                    <button name="action_report" type="object"
+                            id="day_report_view_xl"
+                            string="Print xls"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_purchase_day_report" model="ir.actions.act_window">
+        <field name="name">Day Wise Report</field>
+        <field name="res_model">day.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="final.day_purchase_report_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_report"/>
+        <field name="binding_view_types">form</field>
+    </record>
+    <record id="action_report_purchase_order" model="ir.actions.report">
+        <field name="name">Purchase Order</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">purchase.report_purchaseorder</field>
+        <field name="report_file">purchase.report_purchaseorder</field>
+        <field name="print_report_name">
+            (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+            'Purchase Order - %s' % (object.name))
+        </field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
+

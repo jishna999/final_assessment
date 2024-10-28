@@ -1,0 +1,7 @@
+<odoo>
+
+     <record id="group_day_wise_purchase_report" model="res.groups">
+        <field name="name">Day wise Purchase Report</field>
+    </record>
+
+</odoo>
